@@ -25,12 +25,12 @@ jobs:
         run: dotnet test --no-build --verbosity normal
       - name: Publish
         if: startsWith(github.ref, 'refs/tags/')
-        run: dotnet publish -r "win-x64" -p:PublishReadyToRun=true -p:PublishSingleFile=true --self-contained
+        run: dotnet publish -r "win-x64" -c Release -p:PublishReadyToRun=true -p:PublishSingleFile=true --self-contained
       - name: Zip artifact
         uses: papeloto/action-zip@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: Migrator/bin/Release/net5.0/publish
+          files: ./Migrator/bin/Release/net5.0/win-x64/publish
           dest: Migrator.zip
       - name: Release
         uses: softprops/action-gh-release@v1
